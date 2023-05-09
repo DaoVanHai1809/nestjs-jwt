@@ -5,43 +5,45 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # networks:
-    #   - shared-network
+    networks:
+      - shared-network
     ports:
       - 5000:3000
-    # depends_on:
-    #   - postgres
+    depends_on:
+      - postgres
     environment:
-      - DATABASE_URL=postgresql://nestpro:123456@postgres:5432/nest_db?schema=public
+      - DATABASE_URL=postgresql://nestjwtdb:postgres@postgres:5432/nest_db?schema=public
       - GENERATE_SOURCEMAP=false
 
-#   postgres:
-#     image: postgres:14
-#     container_name: postgresdb
-#     restart: always
-#     environment:
-#       - POSTGRES_DB=nest_db
-#       - POSTGRES_USER=nestpro
-#       - POSTGRES_PASSWORD=123456
-#     networks:
-#       - shared-network
-#     ports:
-#       - 5432:5432
-#     volumes:
-#       - postgres:/var/lib/postgresql/data
-#   pgadmin:
-#     image: dpage/pgadmin4
-#     environment:
-#       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-#       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-#     networks:
-#       - shared-network
-#     volumes:
-#       - pgadmin:/var/lib/pgadmin
-#     ports:
-#       - '9003:80'
-# volumes:
-#   postgres:
-#     driver: local
-#   pgadmin:
-#     driver: local
+  postgres:
+    image: postgres:14
+    container_name: postgresdb
+    restart: always
+    environment:
+      - POSTGRES_DB=nest_db
+      - POSTGRES_USER=nestjwtdb
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - shared-network
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    networks:
+      - shared-network
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - '9003:80'
+volumes:
+  postgres:
+    driver: local
+  pgadmin:
+    driver: local
+networks:
+  shared-network:

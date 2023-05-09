@@ -3,7 +3,7 @@ FROM node:18-alpine AS builder
 WORKDIR /app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package.json ./
-# COPY prisma ./prisma/
+COPY prisma ./prisma/
 # Install app dependencies
 RUN yarn install --frozen-lockfile
 COPY . .
